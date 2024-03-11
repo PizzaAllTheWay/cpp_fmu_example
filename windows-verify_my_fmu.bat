@@ -1,0 +1,1 @@
+fmpy simulate ./build/MySimpleFmu.fmu --show-plot --step-size 0.1 --stop-time 10 --start-values MyParameter 2 MyInput 1

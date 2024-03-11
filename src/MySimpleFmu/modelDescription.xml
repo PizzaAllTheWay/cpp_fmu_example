@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<fmiModelDescription
+    fmiVersion="2.0"
+    modelName="MySimpleFmu"
+    guid="@FMU_UUID@"
+    description="An FMU"
+    author="Kristoffer Skare"
+    version="0.1">
+
+    <CoSimulation
+        modelIdentifier="MySimpleFmu"
+        canHandleVariableCommunicationStepSize="true" />
+
+    <UnitDefinitions>
+        <Unit name="MyUnit">
+        <!-- rad * m^2 * s^(-3) -->
+        <BaseUnit rad="1" m="2" s="-3"/>
+        </Unit>
+        
+    </UnitDefinitions>
+
+    <ModelVariables>
+    <!-- 
+        <ScalarVariable name="Arbitrary identifier"      valueReference="Unique ID of variable"   causality="input/output/parameter"   
+        
+        variability="continious/dicrete/fixed/tunable"      description="Arbitrary description"     >
+            <Real/Integer/Boolean/String start="Arbitrary start value cooresponiong to variable type"
+                unit = "name from  <UnitDefinitions> above"
+             />
+        </ScalarVariable>
+
+
+    -->
+
+    <!-- INput variable that is a float and is a continious value (You could also have a discrete one) -->
+
+        <ScalarVariable name="MyInput"      valueReference="0"   causality="input" variability="continuous"      description="An input"     ><Real start="0.0" /></ScalarVariable>
+        
+        <ScalarVariable name="MyParameter"  valueReference="1"  causality="parameter"   variability="tunable"      description="A parameter"     ><Integer start="0" /></ScalarVariable>
+
+        <ScalarVariable name="MyOutput[0]"    valueReference="2"  causality="output"   variability="continuous"      description="An output"     ><Real start="0.0" unit="MyUnit"/></ScalarVariable>
+        <ScalarVariable name="MyOutput[1]"    valueReference="3"  causality="output"   variability="continuous"      description="An output"     ><Real start="0.0" unit="MyUnit"/></ScalarVariable>
+    
+    </ModelVariables>
+
+    <ModelStructure>
+        <Outputs>
+        <!-- This explains to the STC what ModelVariables will becopme outputs of the FMU model -->
+            <Unknown index="2"/>
+            <Unknown index="3"/>
+        </Outputs>
+    </ModelStructure>
+
+</fmiModelDescription>
