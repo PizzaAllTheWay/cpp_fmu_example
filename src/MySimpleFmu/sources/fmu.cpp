@@ -1,4 +1,5 @@
 #include "fmu-uuid.h"
+#include <cstring> // For strcmp
 #include <array>
 #include <cppfmu_cs.hpp>
 
@@ -100,6 +101,14 @@ public:
     bool DoStep(cppfmu::FMIReal startOfTimeStep, cppfmu::FMIReal timeStep, cppfmu::FMIBoolean isThisANewTimeStep,
         cppfmu::FMIReal& endOfTimeStep) override
     {
+        (void)startOfTimeStep; // Mark as unused
+        (void)isThisANewTimeStep; // Mark as unused
+        (void)endOfTimeStep; // Mark as unused
+
+        // Actual simulation
+        // The whole reason we have this whole setup is for these 3 lines of code
+        // The whole purpose of this example .git repo is for these 3 single lines of code...
+        // (plz kill me, why C++ must be this way T_T T_T T_T)
         MyOutput[0] = MyInput + static_cast<cppfmu::FMIReal>(MyParameter);
         MyOutput[1] += timeStep;
         return true;
@@ -124,7 +133,7 @@ cppfmu::UniquePtr<cppfmu::SlaveInstance> CppfmuInstantiateSlave(
     cppfmu::FMIString /*mimeType*/, cppfmu::FMIReal /*timeout*/, cppfmu::FMIBoolean /*visible*/,
     cppfmu::FMIBoolean /*interactive*/, cppfmu::Memory memory, cppfmu::Logger /*logger*/)
 {
-    if (std::strcmp(fmuGUID, FMU_UUID) != 0) {
+    if (strcmp(fmuGUID, FMU_UUID) != 0) {
         throw std::runtime_error("FMU GUID mismatch");
     }
     // Class in AllocateUnique is the class that inherits from cppfmu::SlaveInstance and contains the FMU code
